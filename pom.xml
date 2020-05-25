@@ -1,0 +1,101 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.chedaian.tools</groupId>
+	<artifactId>kafka-transponder</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+
+	<dependencies>
+
+		<!-- kafka -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>0.10.1.1</version>
+		</dependency>
+
+
+		<!-- gateway -->
+		<dependency>
+			<groupId>com.chedaia.server</groupId>
+			<artifactId>gateway-server-common</artifactId>
+			<version>3.0.0</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>com.chedaia.server</groupId>
+					<artifactId>gateway-server-spi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.chedaia.server</groupId>
+					<artifactId>gateway-server-tools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.chedaia.server</groupId>
+					<artifactId>gateway-server-domain</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- common -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8</version>
+		</dependency>
+
+		<!-- log -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<!-- jar包中排除这些文件 -->
+					<excludes>
+						<exclude>log4j.properties</exclude>
+						<exclude>disconf.properties</exclude>
+						<exclude>system.properties</exclude>
+						<exclude>logback.xml</exclude>
+						<exclude>log4j2.xml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<descriptor>src/main/assembly/assembly.xml</descriptor>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
